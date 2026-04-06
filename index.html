@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>GuidanceConnect | Virtual Counseling System</title>
+    <!-- Google Fonts + Font Awesome Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            color: #f1f5f9;
+        }
+
+        /* ---------- NAVIGATION BAR ---------- */
+        .navbar {
+            background: rgba(15, 23, 42, 0.7);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(99, 102, 241, 0.3);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            width: 100%;
+        }
+
+        .nav-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            background: linear-gradient(145deg, #818cf8, #4f46e5);
+            width: 40px;
+            height: 40px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 6px 12px -6px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo-icon i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .navbar h1 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            background: linear-gradient(to right, #e0e7ff, #c7d2fe);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .nav-badge {
+            background: rgba(79, 70, 229, 0.2);
+            backdrop-filter: blur(4px);
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid rgba(129, 140, 248, 0.4);
+            color: #cbd5e1;
+        }
+
+        .nav-badge i {
+            margin-right: 6px;
+            font-size: 0.8rem;
+            color: #a5b4fc;
+        }
+
+        /* ---------- MAIN LAYOUT: CENTERED CARD ---------- */
+        .main-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1.5rem;
+        }
+
+        .form-card {
+            background: rgba(255, 255, 255, 0.96);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(99, 102, 241, 0.2);
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem 2rem 2.2rem;
+            transition: transform 0.2s ease;
+            color: #0f172a;
+        }
+
+        .form-card:hover {
+            transform: translateY(-3px);
+        }
+
+        /* card header */
+        .card-header {
+            text-align: center;
+            margin-bottom: 1.8rem;
+        }
+
+        .card-header h2 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1e1b4b, #4f46e5);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-header p {
+            color: #475569;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        /* form group styles */
+        .input-group {
+            margin-bottom: 1.4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #1e293b;
+            letter-spacing: 0.3px;
+            margin-left: 4px;
+        }
+
+        .input-group label i {
+            margin-right: 8px;
+            color: #4f46e5;
+            font-size: 0.8rem;
+        }
+
+        /* modern input styling */
+        .form-control {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            font-size: 1rem;
+            font-family: 'Inter', monospace;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 20px;
+            background-color: #ffffff;
+            transition: all 0.25s ease;
+            outline: none;
+            color: #0f172a;
+            font-weight: 500;
+        }
+
+        .form-control:focus {
+            border-color: #818cf8;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.2);
+            background-color: #fefeff;
+        }
+
+        .form-control::placeholder {
+            color: #94a3b8;
+            font-weight: 400;
+            font-size: 0.9rem;
+        }
+
+        /* button modern */
+        .btn-submit {
+            width: 100%;
+            background: linear-gradient(105deg, #4f46e5 0%, #7c3aed 100%);
+            border: none;
+            padding: 0.9rem 1rem;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            cursor: pointer;
+            transition: all 0.25s;
+            margin-top: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            box-shadow: 0 6px 14px -6px rgba(79, 70, 229, 0.4);
+        }
+
+        .btn-submit i {
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+        }
+
+        .btn-submit:hover {
+            background: linear-gradient(105deg, #6366f1 0%, #8b5cf6 100%);
+            transform: scale(1.01);
+            box-shadow: 0 12px 20px -12px rgba(79, 70, 229, 0.6);
+        }
+
+        .btn-submit:hover i {
+            transform: translateX(4px);
+        }
+
+        .btn-submit:active {
+            transform: scale(0.98);
+        }
+
+        /* Validation message */
+        .validation-message {
+            font-size: 0.75rem;
+            margin-top: 4px;
+            margin-left: 10px;
+            color: #ef4444;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .hidden-message {
+            display: none;
+        }
+
+        /* success toast + error toast */
+        .success-toast {
+            background: #10b981;
+            color: white;
+            padding: 0.9rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 10px 20px -5px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(4px);
+            margin-bottom: 1rem;
+            width: 100%;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .error-toast {
+            background: #dc2626;
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 60px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+        }
+
+        /* footer */
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            background: rgba(15, 23, 42, 0.4);
+            border-top: 1px solid rgba(99, 102, 241, 0.2);
+            margin-top: auto;
+        }
+
+        .footer i {
+            margin: 0 4px;
+        }
+
+        /* responsive */
+        @media (max-width: 560px) {
+            .form-card {
+                padding: 1.5rem;
+            }
+            .navbar h1 {
+                font-size: 1.2rem;
+            }
+            .nav-badge span {
+                display: none;
+            }
+            .nav-badge i {
+                margin-right: 0;
+            }
+            .card-header h2 {
+                font-size: 1.5rem;
+            }
+            .btn-submit {
+                padding: 0.8rem;
+            }
+        }
+
+        /* date & time picker consistency */
+        input[type="date"]::-webkit-calendar-picker-indicator,
+        input[type="time"]::-webkit-calendar-picker-indicator {
+            cursor: pointer;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+        }
+        input[type="date"]::-webkit-calendar-picker-indicator:hover,
+        input[type="time"]::-webkit-calendar-picker-indicator:hover {
+            opacity: 1;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+        input[type="number"]::-webkit-inner-spin-button, 
+        input[type="number"]::-webkit-outer-spin-button {
+            opacity: 0.5;
+        }
+        
+        /* row for date + time side by side on larger screens */
+        .datetime-row {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .datetime-row .input-group {
+            flex: 1;
+            min-width: 140px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar - modern & sleek -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo-area">
+                <div class="logo-icon">
+                    <i class="fas fa-head-side-vr"></i>
+                </div>
+                <h1>GuidanceConnect</h1>
+            </div>
+            <div class="nav-badge">
+                <i class="fas fa-chalkboard-user"></i>
+                <span>Virtual & Remote Counseling</span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <div class="form-card">
+            <div class="card-header">
+                <h2>Book a Session</h2>
+                <p>Connect with expert counselors — secure & confidential</p>
+            </div>
+
+            <!-- dynamic message area for success / error feedback -->
+            <div id="formFeedbackArea" style="min-height: 70px;"></div>
+
+            <!-- 
+                ============================================================
+                EXACT FORM as requested: action="save.php" method="post"
+                Fields with EXACT names: name, email, counselor, date, time
+                (no typos, backend will receive correct parameters)
+                ============================================================
+            -->
+            <form id="counselingForm" action="save.php" method="post" novalidate>
+                <!-- Full Name - input name="name" (exact) -->
+                <div class="input-group">
+                    <label for="fullname"><i class="fas fa-user-graduate"></i> Full Name</label>
+                    <input type="text" id="fullname" name="name" class="form-control" placeholder="e.g., Rahul Mehta" value="" required>
+                    <div class="validation-message hidden-message" id="nameError"><i class="fas fa-exclamation-circle"></i> Please enter your full name</div>
+                </div>
+
+                <!-- Email Address - input name="email" (exact) -->
+                <div class="input-group">
+                    <label for="emailId"><i class="fas fa-envelope"></i> Email Address</label>
+                    <input type="email" id="emailId" name="email" class="form-control" placeholder="student@example.com" required>
+                    <div class="validation-message hidden-message" id="emailError"><i class="fas fa-exclamation-circle"></i> Enter a valid email address</div>
+                </div>
+
+                <!-- Counselor ID - input name="counselor" (exact, number type) -->
+                <div class="input-group">
+                    <label for="counselorId"><i class="fas fa-user-tie"></i> Counselor ID</label>
+                    <input type="number" id="counselorId" name="counselor" class="form-control" placeholder="e.g., 101, 102, 103" required>
+                    <div class="validation-message hidden-message" id="counselorError"><i class="fas fa-exclamation-circle"></i> Please enter a valid Counselor ID (numeric)</div>
+                    <div style="font-size: 0.7rem; color: #4b5563; margin-top: 4px; margin-left: 8px;">
+                        <i class="fas fa-info-circle"></i> Counselor IDs: 101 (Career), 102 (Academic), 103 (Wellness)
+                    </div>
+                </div>
+
+                <!-- Date & Time Row: date + time side by side (both required) -->
+                <div class="datetime-row">
+                    <!-- Session Date - input name="date" (exact) -->
+                    <div class="input-group">
+                        <label for="sessionDate"><i class="fas fa-calendar-alt"></i> Session Date</label>
+                        <input type="date" id="sessionDate" name="date" class="form-control" required>
+                        <div class="validation-message hidden-message" id="dateError"><i class="fas fa-exclamation-circle"></i> Please select a valid date</div>
+                    </div>
+
+                    <!-- Session Time - input name="time" (exact as requested) -->
+                    <div class="input-group">
+                        <label for="sessionTime"><i class="fas fa-clock"></i> Time</label>
+                        <input type="time" id="sessionTime" name="time" class="form-control" required>
+                        <div class="validation-message hidden-message" id="timeError"><i class="fas fa-exclamation-circle"></i> Please select a preferred time</div>
+                    </div>
+                </div>
+
+                <!-- Extra UX note: backend untouched, just helpful info -->
+                <div style="font-size: 0.75rem; color: #475569; background: #f1f5f9; border-radius: 28px; padding: 0.5rem 1rem; margin-bottom: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-clock" style="color: #4f46e5;"></i> 
+                    <span>You will receive confirmation via email within 24 hours.</span>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn-submit" id="submitBtn">
+                    <span>Request Counseling Session</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+
+            <div style="margin-top: 1.6rem; text-align: center; font-size: 0.7rem; color: #64748b;">
+                <i class="fas fa-shield-alt"></i> Secure & Confidential · Certified Counselors
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <i class="fas fa-heart" style="color: #f43f5e;"></i> Developed for Student Counseling · Empowering futures <i class="fas fa-graduation-cap"></i>
+    </footer>
+
+    <script>
+        (function() {
+            // DOM elements - exact field references (all 5 required fields)
+            const form = document.getElementById('counselingForm');
+            const nameInput = document.querySelector('input[name="name"]');
+            const emailInput = document.querySelector('input[name="email"]');
+            const counselorInput = document.querySelector('input[name="counselor"]');
+            const dateInput = document.querySelector('input[name="date"]');
+            const timeInput = document.querySelector('input[name="time"]');
+            
+            const feedbackArea = document.getElementById('formFeedbackArea');
+            
+            // Error spans
+            const nameErrorSpan = document.getElementById('nameError');
+            const emailErrorSpan = document.getElementById('emailError');
+            const counselorErrorSpan = document.getElementById('counselorError');
+            const dateErrorSpan = document.getElementById('dateError');
+            const timeErrorSpan = document.getElementById('timeError');
+            
+            // Helper: show/hide field error + border style
+            function showFieldError(fieldElement, errorElement, isValid) {
+                if (!fieldElement) return;
+                if (!isValid) {
+                    errorElement.classList.remove('hidden-message');
+                    fieldElement.style.borderColor = '#f87171';
+                    fieldElement.style.backgroundColor = '#fff5f5';
+                } else {
+                    errorElement.classList.add('hidden-message');
+                    fieldElement.style.borderColor = '#e2e8f0';
+                    fieldElement.style.backgroundColor = '#ffffff';
+                }
+            }
+            
+            // validation functions
+            function validateName() {
+                const name = nameInput ? nameInput.value.trim() : '';
+                const isValid = name.length >= 2 && /^[a-zA-Z\s\-']+$/.test(name);
+                if (nameInput) showFieldError(nameInput, nameErrorSpan, isValid);
+                return isValid;
+            }
+            
+            function validateEmail() {
+                const email = emailInput ? emailInput.value.trim() : '';
+                const emailPattern = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+                const isValid = emailPattern.test(email);
+                if (emailInput) showFieldError(emailInput, emailErrorSpan, isValid);
+                return isValid;
+            }
+            
+            function validateCounselor() {
+                let counselorVal = counselorInput ? counselorInput.value.trim() : '';
+                let isValid = false;
+                if (counselorVal !== '') {
+                    const num = Number(counselorVal);
+                    isValid = !isNaN(num) && Number.isInteger(num) && num > 0 && num <= 9999;
+                }
+                if (counselorInput) showFieldError(counselorInput, counselorErrorSpan, isValid);
+                return isValid;
+            }
+            
+            function validateDate() {
+                let dateVal = dateInput ? dateInput.value : '';
+                let isValid = false;
+                if (dateVal) {
+                    const selectedDate = new Date(dateVal);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    isValid = selectedDate >= today;
+                }
+                if (dateInput) showFieldError(dateInput, dateErrorSpan, isValid);
+                return isValid;
+            }
+            
+            function validateTime() {
+                let timeVal = timeInput ? timeInput.value : '';
+                let isValid = timeVal !== '';
+                if (timeInput) showFieldError(timeInput, timeErrorSpan, isValid);
+                return isValid;
+            }
+            
+            function validateAll() {
+                const isNameOk = validateName();
+                const isEmailOk = validateEmail();
+                const isCounselorOk = validateCounselor();
+                const isDateOk = validateDate();
+                const isTimeOk = validateTime();
+                return isNameOk && isEmailOk && isCounselorOk && isDateOk && isTimeOk;
+            }
+            
+            // live validation events
+            if (nameInput) nameInput.addEventListener('input', validateName);
+            if (emailInput) emailInput.addEventListener('input', validateEmail);
+            if (counselorInput) counselorInput.addEventListener('input', validateCounselor);
+            if (dateInput) dateInput.addEventListener('change', validateDate);
+            if (timeInput) timeInput.addEventListener('change', validateTime);
+            
+            // Before submit: validation and submit handling (preserve exact POST to save.php)
+            form.addEventListener('submit', function(e) {
+                // full validation
+                if (!validateAll()) {
+                    e.preventDefault();
+                    feedbackArea.innerHTML = `<div class="error-toast"><i class="fas fa-times-circle"></i> Please fix the errors before submitting (check name, email, counselor ID, date & time).</div>`;
+                    setTimeout(() => {
+                        if (feedbackArea.firstChild) feedbackArea.innerHTML = '';
+                    }, 4000);
+                    return false;
+                }
+                
+                // Show submitting visual feedback (improves UX)
+                const submitBtn = document.getElementById('submitBtn');
+                submitBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Submitting...';
+                submitBtn.disabled = true;
+                
+                // Set sessionStorage flag to show success message after redirect/refresh
+                sessionStorage.setItem('formSubmittedSuccess', 'true');
+                
+                feedbackArea.innerHTML = `<div class="success-toast" style="background:#4f46e5;"><i class="fas fa-hourglass-half"></i> Processing request, please wait...</div>`;
+                
+                // allow form to submit natively to save.php (no breaking)
+                return true;
+            });
+            
+            // AFTER page loads: display success message if coming back from successful submission
+            const justSubmittedFlag = sessionStorage.getItem('formSubmittedSuccess');
+            if (justSubmittedFlag === 'true') {
+                sessionStorage.removeItem('formSubmittedSuccess');
+                setTimeout(() => {
+                    feedbackArea.innerHTML = `<div class="success-toast"><i class="fas fa-check-circle"></i> ✓ Session request submitted! A confirmation will be sent to your email.</div>`;
+                    setTimeout(() => {
+                        if (feedbackArea.firstChild && feedbackArea.firstChild.classList && feedbackArea.firstChild.classList.contains('success-toast')) {
+                            feedbackArea.innerHTML = '';
+                        }
+                    }, 6000);
+                }, 100);
+            }
+            
+            // Also check URL parameters in case backend redirects with ?success or ?error (optional but safe)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('error') && !justSubmittedFlag) {
+                feedbackArea.innerHTML = `<div class="error-toast"><i class="fas fa-exclamation-triangle"></i> Submission error. Please try again or contact support.</div>`;
+                setTimeout(() => {
+                    if (feedbackArea.firstChild) feedbackArea.innerHTML = '';
+                }, 5000);
+            } else if (urlParams.get('success') && !justSubmittedFlag) {
+                feedbackArea.innerHTML = `<div class="success-toast"><i class="fas fa-check-circle"></i> Session booked successfully! We'll reach out soon.</div>`;
+                setTimeout(() => {
+                    if (feedbackArea.firstChild) feedbackArea.innerHTML = '';
+                }, 5000);
+            }
+            
+            // Set min date for date picker to today (UX)
+            if (dateInput) {
+                const today = new Date().toISOString().split('T')[0];
+                dateInput.setAttribute('min', today);
+            }
+            
+            // Optional: restrict counselor ID to numeric only
+            if (counselorInput) {
+                counselorInput.addEventListener('keypress', function(e) {
+                    if (isNaN(e.key) && e.key !== 'Backspace' && e.key !== 'Delete' && e.key !== 'ArrowLeft' && e.key !== 'ArrowRight' && e.key !== 'Tab') {
+                        e.preventDefault();
+                    }
+                });
+            }
+        })();
+    </script>
+</body>
+</html>
